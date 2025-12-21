@@ -1,0 +1,357 @@
+/**
+ * Styles d'administration Katadoo
+ *
+ * @package Katadoo
+ * @since 1.0.0
+ */
+
+/* Variables */
+:root {
+    --katadoo-primary: #e85431;
+    --katadoo-primary-dark: #5d2214;
+    --katadoo-primary-light: #f19883;
+    --katadoo-success: #10b981;
+    --katadoo-error: #ef4444;
+    --katadoo-warning: #f59e0b;
+    --katadoo-gray-50: #f9fafb;
+    --katadoo-gray-100: #f3f4f6;
+    --katadoo-gray-200: #e5e7eb;
+    --katadoo-gray-300: #d1d5db;
+    --katadoo-gray-500: #6b7280;
+    --katadoo-gray-700: #374151;
+    --katadoo-gray-900: #111827;
+    --katadoo-radius: 8px;
+    --katadoo-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --katadoo-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Layout */
+.katadoo-admin {
+    margin: 20px 20px 20px 0;
+}
+
+.katadoo-admin h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--katadoo-gray-900);
+    margin-bottom: 20px;
+}
+
+.katadoo-admin h1 .dashicons {
+    color: var(--katadoo-primary);
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+}
+
+.katadoo-admin-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+}
+
+.katadoo-admin-content .katadoo-card-full {
+    grid-column: 1 / -1;
+}
+
+/* Cards */
+.katadoo-card {
+    background: #fff;
+    border: 1px solid var(--katadoo-gray-200);
+    border-radius: var(--katadoo-radius);
+    box-shadow: var(--katadoo-shadow);
+}
+
+.katadoo-card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--katadoo-gray-200);
+}
+
+.katadoo-card-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--katadoo-gray-900);
+}
+
+.katadoo-card-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--katadoo-gray-900);
+}
+
+.katadoo-card-header .description {
+    margin: 5px 0 0 0;
+    color: var(--katadoo-gray-500);
+}
+
+.katadoo-card-body {
+    padding: 20px;
+}
+
+.katadoo-card-body p {
+    margin: 0 0 10px 0;
+}
+
+.katadoo-card-body ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.katadoo-card-body li {
+    margin-bottom: 5px;
+}
+
+.katadoo-card-body a {
+    color: var(--katadoo-primary);
+    text-decoration: none;
+}
+
+.katadoo-card-body a:hover {
+    text-decoration: underline;
+}
+
+/* Form Table */
+.katadoo-admin .form-table th {
+    padding: 20px 10px 20px 0;
+    width: 200px;
+}
+
+.katadoo-admin .form-table td {
+    padding: 15px 10px;
+}
+
+.katadoo-admin .form-table input[type="text"],
+.katadoo-admin .form-table input[type="url"],
+.katadoo-admin .form-table input[type="email"],
+.katadoo-admin .form-table input[type="password"],
+.katadoo-admin .form-table select,
+.katadoo-admin .form-table textarea {
+    border: 1px solid var(--katadoo-gray-300);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.katadoo-admin .form-table input:focus,
+.katadoo-admin .form-table select:focus,
+.katadoo-admin .form-table textarea:focus {
+    border-color: var(--katadoo-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    outline: none;
+}
+
+.katadoo-admin .form-table .description {
+    margin-top: 8px;
+    color: var(--katadoo-gray-500);
+    font-size: 13px;
+}
+
+.katadoo-admin .form-table .description a {
+    color: var(--katadoo-primary);
+}
+
+/* Actions */
+.katadoo-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid var(--katadoo-gray-200);
+    background: var(--katadoo-gray-50);
+    border-radius: 0 0 var(--katadoo-radius) var(--katadoo-radius);
+}
+
+.katadoo-actions .button-primary {
+    background: var(--katadoo-primary);
+    border-color: var(--katadoo-primary);
+}
+
+.katadoo-actions .button-primary:hover {
+    background: var(--katadoo-primary-dark);
+    border-color: var(--katadoo-primary-dark);
+}
+
+.katadoo-actions .button-secondary .dashicons {
+    margin-right: 5px;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1.5;
+}
+
+/* Notices */
+.katadoo-notice {
+    padding: 12px 15px;
+    margin: 15px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.katadoo-notice.success {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+}
+
+.katadoo-notice.error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.katadoo-notice.warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+}
+
+/* Modules Grid */
+.katadoo-modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.katadoo-module-card {
+    background: #fff;
+    border: 2px solid var(--katadoo-gray-200);
+    border-radius: var(--katadoo-radius);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.katadoo-module-card.active {
+    border-color: var(--katadoo-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.katadoo-module-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-bottom: 1px solid var(--katadoo-gray-200);
+}
+
+.katadoo-module-header .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: var(--katadoo-primary);
+}
+
+.katadoo-module-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.katadoo-module-body {
+    padding: 15px;
+}
+
+.katadoo-module-body p {
+    margin: 0 0 10px 0;
+    color: var(--katadoo-gray-500);
+    font-size: 14px;
+}
+
+.katadoo-shortcode code {
+    display: inline-block;
+    background: var(--katadoo-gray-100);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.katadoo-module-footer {
+    padding: 15px;
+    border-top: 1px solid var(--katadoo-gray-200);
+    background: var(--katadoo-gray-50);
+    border-radius: 0 0 var(--katadoo-radius) var(--katadoo-radius);
+}
+
+/* Toggle Switch */
+.katadoo-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.katadoo-toggle input {
+    display: none;
+}
+
+.katadoo-toggle-slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--katadoo-gray-300);
+    border-radius: 24px;
+    transition: background 0.2s;
+}
+
+.katadoo-toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: var(--katadoo-shadow);
+    transition: transform 0.2s;
+}
+
+.katadoo-toggle input:checked+.katadoo-toggle-slider {
+    background: var(--katadoo-primary);
+}
+
+.katadoo-toggle input:checked+.katadoo-toggle-slider::after {
+    transform: translateX(20px);
+}
+
+.katadoo-toggle-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--katadoo-gray-700);
+}
+
+/* Required indicator */
+.required {
+    color: var(--katadoo-error);
+}
+
+/* Sidebar */
+.katadoo-sidebar .katadoo-card {
+    margin-bottom: 20px;
+}
+
+.katadoo-sidebar .katadoo-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media screen and (max-width: 1200px) {
+    .katadoo-admin-content {
+        grid-template-columns: 1fr;
+    }
+
+    .katadoo-sidebar {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .katadoo-sidebar .katadoo-card {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,283 @@
+# Copyright (C) 2024 Katalyx
+# This file is distributed under the same license as the Katadoo plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Katadoo 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/katalyx/katadoo/issues\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: katadoo.php:13
+msgid "Connectez votre site WordPress à Odoo. Newsletter, Helpdesk et plus encore."
+msgstr ""
+
+#: includes/class-activator.php:33
+msgid "Ce plugin nécessite PHP 8.0 ou supérieur."
+msgstr ""
+
+#: includes/class-activator.php:42
+msgid "Ce plugin nécessite WordPress 6.0 ou supérieur."
+msgstr ""
+
+#: includes/core/class-config.php:111
+msgid "Merci pour votre inscription !"
+msgstr ""
+
+#: includes/core/class-config.php:112
+msgid "Une erreur est survenue. Veuillez réessayer."
+msgstr ""
+
+#: includes/core/class-config.php:113
+msgid "S'inscrire"
+msgstr ""
+
+#: includes/core/class-config.php:127
+msgid "Votre ticket a été créé avec succès !"
+msgstr ""
+
+#: includes/core/class-config.php:129
+msgid "Envoyer"
+msgstr ""
+
+#: includes/core/class-odoo-client.php:86
+msgid "Configuration Odoo incomplète."
+msgstr ""
+
+#: includes/core/class-odoo-client.php:105
+msgid "Erreur d'authentification."
+msgstr ""
+
+#: includes/core/class-odoo-client.php:110
+msgid "Identifiants invalides."
+msgstr ""
+
+#: includes/admin/class-admin.php:104
+msgid "Test en cours..."
+msgstr ""
+
+#: includes/admin/class-admin.php:105
+msgid "Chargement..."
+msgstr ""
+
+#: includes/admin/class-admin.php:107
+msgid "Paramètres enregistrés."
+msgstr ""
+
+#: includes/admin/class-admin.php:108
+msgid "Êtes-vous sûr de vouloir réinitialiser les paramètres ?"
+msgstr ""
+
+#: includes/admin/class-admin.php:119
+#: includes/admin/class-admin.php:127
+msgid "Katadoo"
+msgstr ""
+
+#: includes/admin/class-admin.php:135
+msgid "Connexion Odoo"
+msgstr ""
+
+#: includes/admin/class-admin.php:136
+msgid "Connexion"
+msgstr ""
+
+#: includes/admin/class-admin.php:145
+#: includes/admin/partials/admin-modules.php:26
+msgid "Modules"
+msgstr ""
+
+#: includes/admin/class-admin.php:154
+msgid "Newsletter"
+msgstr ""
+
+#: includes/admin/class-admin.php:163
+msgid "Helpdesk"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:19
+msgid "Katadoo - Connexion Odoo"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:25
+msgid "Configuration de la connexion"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:27
+msgid "Configurez les paramètres de connexion à votre instance Odoo."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:36
+msgid "URL Odoo"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:48
+msgid "L'URL de votre instance Odoo (sans slash final)."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:56
+msgid "Base de données"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:67
+msgid "Le nom de la base de données Odoo."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:75
+msgid "Nom d'utilisateur"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:87
+msgid "L'email ou le login de l'utilisateur Odoo."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:95
+msgid "Clé API"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:106
+msgid "La clé API de l'utilisateur Odoo (disponible depuis Odoo 14+)."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:108
+msgid "Comment générer une clé API ?"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:115
+msgid "Enregistrer"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:118
+msgid "Tester la connexion"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:129
+msgid "À propos"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:137
+msgid "Un plugin open source par Katalyx pour connecter Odoo à WordPress."
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:141
+msgid "GitHub"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:147
+msgid "Site web Katalyx"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:156
+msgid "Prérequis Odoo"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:161
+msgid "Odoo 14+ (pour les clés API)"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:162
+msgid "Module Email Marketing (Newsletter)"
+msgstr ""
+
+#: includes/admin/partials/admin-connection.php:163
+msgid "Module Helpdesk (Assistance)"
+msgstr ""
+
+#: includes/public/class-public.php:79
+msgid "Envoi en cours..."
+msgstr ""
+
+#: includes/public/class-public.php:81
+msgid "Ce champ est requis."
+msgstr ""
+
+#: includes/public/class-public.php:82
+msgid "Veuillez entrer une adresse email valide."
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Nom"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Votre nom"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Email"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Votre email"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Téléphone"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+#: includes/modules/helpdesk/templates/form.php
+msgid "Votre téléphone"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+msgid "Entreprise"
+msgstr ""
+
+#: includes/public/class-shortcodes.php
+#: includes/modules/newsletter/templates/form.php
+msgid "Votre entreprise"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Sujet"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Sujet de votre demande"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Description"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Décrivez votre demande..."
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Priorité"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Basse"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Normale"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Haute"
+msgstr ""
+
+#: includes/modules/helpdesk/templates/form.php
+msgid "Urgente"
+msgstr ""
