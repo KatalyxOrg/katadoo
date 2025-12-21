@@ -4,14 +4,14 @@
  *
  * @package           Katadoo
  * @author            Katalyx
- * @copyright         2024 Katalyx
+ * @copyright         2025 Katalyx
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name:       Katadoo
- * Plugin URI:        https://github.com/katalyx/katadoo
+ * Plugin URI:        https://github.com/katalyxorg/katadoo
  * Description:       Connectez votre site WordPress à Odoo. Newsletter, Helpdesk et plus encore.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Katalyx
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Version actuelle du plugin.
  */
-define( 'KATADOO_VERSION', '1.0.0' );
+define( 'KATADOO_VERSION', '1.0.1' );
 
 /**
  * Chemin absolu du répertoire du plugin.

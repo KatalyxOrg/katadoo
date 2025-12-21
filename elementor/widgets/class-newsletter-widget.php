@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Background;
 
 /**
  * Classe Katadoo_Newsletter_Widget.
@@ -175,11 +179,11 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
 
         $this->end_controls_section();
 
-        // Section Style - Formulaire
+        // Section Style - Form Container
         $this->start_controls_section(
             'section_style_form',
             array(
-                'label' => __( 'Formulaire', 'katadoo' ),
+                'label' => __( 'Conteneur Formulaire', 'katadoo' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             )
         );
@@ -196,16 +200,24 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
             )
         );
 
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'     => 'form_box_shadow',
+                'selector' => '{{WRAPPER}} .katadoo-form-inner',
+            )
+        );
+
         $this->add_control(
             'form_border_radius',
             array(
                 'label'      => __( 'Bordure arrondie', 'katadoo' ),
                 'type'       => Controls_Manager::SLIDER,
-                'size_units' => array( 'px' ),
+                'size_units' => array( 'px', '%' ),
                 'range'      => array(
                     'px' => array(
                         'min' => 0,
-                        'max' => 30,
+                        'max' => 100,
                     ),
                 ),
                 'default'    => array(
@@ -223,7 +235,7 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
             array(
                 'label'      => __( 'Padding', 'katadoo' ),
                 'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', 'em' ),
+                'size_units' => array( 'px', 'em', '%' ),
                 'default'    => array(
                     'top'    => 24,
                     'right'  => 24,
@@ -234,6 +246,176 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
                 'selectors'  => array(
                     '{{WRAPPER}} .katadoo-form-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
+            )
+        );
+
+        $this->add_control(
+            'field_gap',
+            array(
+                'label'      => __( 'Espacement entre champs', 'katadoo' ),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => array( 'px' ),
+                'range'      => array(
+                    'px' => array(
+                        'min' => 0,
+                        'max' => 60,
+                    ),
+                ),
+                'default'    => array(
+                    'unit' => 'px',
+                    'size' => 15,
+                ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .katadoo-field' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // Section Style - Labels
+        $this->start_controls_section(
+            'section_style_labels',
+            array(
+                'label' => __( 'Labels', 'katadoo' ),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            array(
+                'name'     => 'label_typography',
+                'selector' => '{{WRAPPER}} .katadoo-field label',
+            )
+        );
+
+        $this->add_control(
+            'label_color',
+            array(
+                'label'     => __( 'Couleur du texte', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-field label' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'label_spacing',
+            array(
+                'label'      => __( 'Espacement inférieur', 'katadoo' ),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => array( 'px' ),
+                'range'      => array(
+                    'px' => array(
+                        'min' => 0,
+                        'max' => 50,
+                    ),
+                ),
+                'default'    => array(
+                    'unit' => 'px',
+                    'size' => 5,
+                ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .katadoo-field label' => 'margin-bottom: {{SIZE}}{{UNIT}}; display: inline-block;',
+                ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // Section Style - Champs (Fields)
+        $this->start_controls_section(
+            'section_style_inputs',
+            array(
+                'label' => __( 'Champs', 'katadoo' ),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            array(
+                'name'     => 'input_typography',
+                'selector' => '{{WRAPPER}} .katadoo-input',
+            )
+        );
+
+        $this->add_control(
+            'input_text_color',
+            array(
+                'label'     => __( 'Couleur du texte', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-input' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'input_placeholder_color',
+            array(
+                'label'     => __( 'Couleur du placeholder', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-input::placeholder' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .katadoo-input::-webkit-input-placeholder' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .katadoo-input::-moz-placeholder' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .katadoo-input:-ms-input-placeholder' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'input_background_color',
+            array(
+                'label'     => __( 'Couleur de fond', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#ffffff',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-input' => 'background-color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            array(
+                'name'     => 'input_border',
+                'selector' => '{{WRAPPER}} .katadoo-input',
+            )
+        );
+
+        $this->add_control(
+            'input_border_radius',
+            array(
+                'label'      => __( 'Bordure arrondie', 'katadoo' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .katadoo-input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'input_padding',
+            array(
+                'label'      => __( 'Padding', 'katadoo' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', 'em' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .katadoo-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ),
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'     => 'input_box_shadow',
+                'selector' => '{{WRAPPER}} .katadoo-input',
             )
         );
 
@@ -248,15 +430,21 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
             )
         );
 
-        $this->add_control(
-            'button_background',
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
             array(
-                'label'     => __( 'Couleur de fond', 'katadoo' ),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#7c3aed',
-                'selectors' => array(
-                    '{{WRAPPER}} .katadoo-button' => 'background-color: {{VALUE}};',
-                ),
+                'name'     => 'button_typography',
+                'selector' => '{{WRAPPER}} .katadoo-button',
+            )
+        );
+
+        $this->start_controls_tabs( 'tabs_button_style' );
+
+        // Onglet Normal
+        $this->start_controls_tab(
+            'tab_button_normal',
+            array(
+                'label' => __( 'Normal', 'katadoo' ),
             )
         );
 
@@ -273,9 +461,50 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
         );
 
         $this->add_control(
+            'button_background',
+            array(
+                'label'     => __( 'Couleur de fond', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#7c3aed',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-button' => 'background-color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'     => 'button_box_shadow',
+                'selector' => '{{WRAPPER}} .katadoo-button',
+            )
+        );
+
+        $this->end_controls_tab();
+
+        // Onglet Hover
+        $this->start_controls_tab(
+            'tab_button_hover',
+            array(
+                'label' => __( 'Au survol', 'katadoo' ),
+            )
+        );
+
+        $this->add_control(
+            'button_text_color_hover',
+            array(
+                'label'     => __( 'Couleur du texte', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-button:hover' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
             'button_hover_background',
             array(
-                'label'     => __( 'Couleur de fond (hover)', 'katadoo' ),
+                'label'     => __( 'Couleur de fond', 'katadoo' ),
                 'type'      => Controls_Manager::COLOR,
                 'default'   => '#6d28d9',
                 'selectors' => array(
@@ -284,24 +513,47 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
             )
         );
 
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            array(
+                'name'     => 'button_box_shadow_hover',
+                'selector' => '{{WRAPPER}} .katadoo-button:hover',
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            array(
+                'name'     => 'button_border',
+                'selector' => '{{WRAPPER}} .katadoo-button',
+                'separator' => 'before',
+            )
+        );
+
         $this->add_control(
             'button_border_radius',
             array(
                 'label'      => __( 'Bordure arrondie', 'katadoo' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => array( 'px' ),
-                'range'      => array(
-                    'px' => array(
-                        'min' => 0,
-                        'max' => 30,
-                    ),
-                ),
-                'default'    => array(
-                    'unit' => 'px',
-                    'size' => 6,
-                ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .katadoo-button' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .katadoo-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'button_padding',
+            array(
+                'label'      => __( 'Padding', 'katadoo' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => array( 'px', 'em' ),
+                'selectors'  => array(
+                    '{{WRAPPER}} .katadoo-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );
@@ -317,6 +569,73 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
                 'default'      => '',
                 'selectors'    => array(
                     '{{WRAPPER}} .katadoo-button' => 'width: 100%;',
+                ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // Section Style - Messages
+        $this->start_controls_section(
+            'section_style_messages',
+            array(
+                'label' => __( 'Messages', 'katadoo' ),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            )
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            array(
+                'name'     => 'message_typography',
+                'selector' => '{{WRAPPER}} .katadoo-message',
+            )
+        );
+
+        $this->add_control(
+            'message_success_color',
+            array(
+                'label'     => __( 'Succès - Couleur Texte', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#155724',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-message.katadoo-success' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'message_success_bg',
+            array(
+                'label'     => __( 'Succès - Couleur Fond', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#d4edda',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-message.katadoo-success' => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'message_error_color',
+            array(
+                'label'     => __( 'Erreur - Couleur Texte', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#721c24',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-message.katadoo-error' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'message_error_bg',
+            array(
+                'label'     => __( 'Erreur - Couleur Fond', 'katadoo' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#f8d7da',
+                'selectors' => array(
+                    '{{WRAPPER}} .katadoo-message.katadoo-error' => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
                 ),
             )
         );

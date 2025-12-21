@@ -141,7 +141,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </p>
                     <ul>
                         <li>
-                            <a href="https://github.com/katalyx/katadoo" target="_blank">
+                            <a href="https://github.com/katalyxorg/katadoo" target="_blank">
                                 <span class="dashicons dashicons-external"></span>
                                 <?php esc_html_e( 'GitHub', 'katadoo' ); ?>
                             </a>
