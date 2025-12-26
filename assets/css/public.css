@@ -26,12 +26,11 @@
 /* Form Container */
 .katadoo-form {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    max-width: 500px;
+    width: 100%;
 }
 
 .katadoo-form-inner {
     background: #fff;
-    border: 1px solid var(--katadoo-gray-200);
     border-radius: var(--katadoo-radius);
     box-shadow: var(--katadoo-shadow);
     padding: 24px;

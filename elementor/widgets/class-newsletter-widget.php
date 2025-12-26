@@ -201,6 +201,14 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
         );
 
         $this->add_group_control(
+            Group_Control_Border::get_type(),
+            array(
+                'name'     => 'form_border',
+                'selector' => '{{WRAPPER}} .katadoo-form-inner',
+            )
+        );
+
+        $this->add_group_control(
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'form_box_shadow',
@@ -212,20 +220,10 @@ class Katadoo_Newsletter_Widget extends Widget_Base {
             'form_border_radius',
             array(
                 'label'      => __( 'Bordure arrondie', 'katadoo' ),
-                'type'       => Controls_Manager::SLIDER,
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
-                'range'      => array(
-                    'px' => array(
-                        'min' => 0,
-                        'max' => 100,
-                    ),
-                ),
-                'default'    => array(
-                    'unit' => 'px',
-                    'size' => 8,
-                ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .katadoo-form-inner' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .katadoo-form-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );

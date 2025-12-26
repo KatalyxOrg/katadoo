@@ -201,6 +201,14 @@ class Katadoo_Helpdesk_Widget extends Widget_Base {
         );
 
         $this->add_group_control(
+            Group_Control_Border::get_type(),
+            array(
+                'name'     => 'form_border',
+                'selector' => '{{WRAPPER}} .katadoo-form-inner',
+            )
+        );
+
+        $this->add_group_control(
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'form_box_shadow',
