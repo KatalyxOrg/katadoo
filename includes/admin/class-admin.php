@@ -187,6 +187,16 @@ class Katadoo_Admin {
             'katadoo-helpdesk',
             array( $this, 'display_helpdesk_page' )
         );
+
+        // Sous-menu ReCaptcha
+        add_submenu_page(
+            'katadoo',
+            __( 'Google ReCaptcha', 'katadoo' ),
+            __( 'ReCaptcha', 'katadoo' ),
+            'manage_options',
+            'katadoo-recaptcha',
+            array( $this, 'display_recaptcha_page' )
+        );
     }
 
     /**
@@ -229,6 +239,12 @@ class Katadoo_Admin {
         register_setting( 'katadoo_helpdesk', 'katadoo_helpdesk_settings', array(
             'type'              => 'array',
             'sanitize_callback' => array( $this, 'sanitize_helpdesk_settings' ),
+        ) );
+
+        // Section ReCaptcha
+        register_setting( 'katadoo_recaptcha', 'katadoo_recaptcha_settings', array(
+            'type'              => 'array',
+            'sanitize_callback' => array( $this, 'sanitize_recaptcha_settings' ),
         ) );
     }
 
@@ -285,6 +301,22 @@ class Katadoo_Admin {
     }
 
     /**
+     * Sanitize les paramètres ReCaptcha.
+     *
+     * @since  1.0.3
+     * @param  array $input Valeurs à sanitizer.
+     * @return array Valeurs sanitizées.
+     */
+    public function sanitize_recaptcha_settings( $input ) {
+        return array(
+            'enabled'    => isset( $input['enabled'] ) ? (bool) $input['enabled'] : false,
+            'site_key'   => isset( $input['site_key'] ) ? sanitize_text_field( $input['site_key'] ) : '',
+            'secret_key' => isset( $input['secret_key'] ) ? sanitize_text_field( $input['secret_key'] ) : '',
+            'threshold'  => isset( $input['threshold'] ) ? floatval( $input['threshold'] ) : 0.5,
+        );
+    }
+
+    /**
      * Affiche la page de paramètres de connexion.
      *
      * @since 1.0.0
@@ -318,6 +350,15 @@ class Katadoo_Admin {
      */
     public function display_helpdesk_page() {
         require_once KATADOO_PLUGIN_DIR . 'includes/admin/partials/admin-helpdesk.php';
+    }
+
+    /**
+     * Affiche la page ReCaptcha.
+     *
+     * @since 1.0.3
+     */
+    public function display_recaptcha_page() {
+        require_once KATADOO_PLUGIN_DIR . 'includes/admin/partials/admin-recaptcha.php';
     }
 
     /**

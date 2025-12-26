@@ -92,7 +92,7 @@ class Katadoo_Shortcodes {
         ob_start();
         ?>
         <div class="katadoo-form katadoo-newsletter-form <?php echo esc_attr( $atts['class'] ); ?>">
-            <form id="katadoo-newsletter-form-<?php echo esc_attr( uniqid() ); ?>" class="katadoo-form-inner" data-type="newsletter">
+            <form id="katadoo-newsletter-form-<?php echo esc_attr( uniqid() ); ?>" class="katadoo-form-inner" data-type="newsletter" method="post">
                 <?php wp_nonce_field( 'katadoo_public_nonce', 'katadoo_nonce' ); ?>
                 <input type="hidden" name="action" value="katadoo_newsletter_subscribe" />
                 <input type="hidden" name="list_id" value="<?php echo esc_attr( $atts['list_id'] ); ?>" />
@@ -147,6 +147,20 @@ class Katadoo_Shortcodes {
                 </div>
 
                 <div class="katadoo-message" style="display: none;"></div>
+
+                <?php $recaptcha_settings = $this->config->get_recaptcha_settings(); ?>
+                <?php if ( $recaptcha_settings['enabled'] ) : ?>
+                    <p class="katadoo-recaptcha-notice">
+                        <?php 
+                        printf(
+                            /* translators: 1: Privacy Policy URL, 2: Terms of Service URL */
+                            esc_html__( 'Ce site est protégé par reCAPTCHA et la %1$s et les %2$s de Google s\'appliquent.', 'katadoo' ),
+                            '<a href="https://policies.google.com/privacy" target="_blank">' . esc_html__( 'Politique de confidentialité', 'katadoo' ) . '</a>',
+                            '<a href="https://policies.google.com/terms" target="_blank">' . esc_html__( 'Conditions d\'utilisation', 'katadoo' ) . '</a>'
+                        );
+                        ?>
+                    </p>
+                <?php endif; ?>
             </form>
         </div>
         <?php
@@ -179,7 +193,7 @@ class Katadoo_Shortcodes {
         ob_start();
         ?>
         <div class="katadoo-form katadoo-helpdesk-form <?php echo esc_attr( $atts['class'] ); ?>">
-            <form id="katadoo-helpdesk-form-<?php echo esc_attr( uniqid() ); ?>" class="katadoo-form-inner" data-type="helpdesk">
+            <form id="katadoo-helpdesk-form-<?php echo esc_attr( uniqid() ); ?>" class="katadoo-form-inner" data-type="helpdesk" method="post">
                 <?php wp_nonce_field( 'katadoo_public_nonce', 'katadoo_nonce' ); ?>
                 <input type="hidden" name="action" value="katadoo_helpdesk_submit" />
                 <input type="hidden" name="team_id" value="<?php echo esc_attr( $atts['team_id'] ); ?>" />
@@ -255,6 +269,20 @@ class Katadoo_Shortcodes {
                 </div>
 
                 <div class="katadoo-message" style="display: none;"></div>
+
+                <?php $recaptcha_settings = $this->config->get_recaptcha_settings(); ?>
+                <?php if ( $recaptcha_settings['enabled'] ) : ?>
+                    <p class="katadoo-recaptcha-notice">
+                        <?php 
+                        printf(
+                            /* translators: 1: Privacy Policy URL, 2: Terms of Service URL */
+                            esc_html__( 'Ce site est protégé par reCAPTCHA et la %1$s et les %2$s de Google s\'appliquent.', 'katadoo' ),
+                            '<a href="https://policies.google.com/privacy" target="_blank">' . esc_html__( 'Politique de confidentialité', 'katadoo' ) . '</a>',
+                            '<a href="https://policies.google.com/terms" target="_blank">' . esc_html__( 'Conditions d\'utilisation', 'katadoo' ) . '</a>'
+                        );
+                        ?>
+                    </p>
+                <?php endif; ?>
             </form>
         </div>
         <?php
@@ -268,6 +296,14 @@ class Katadoo_Shortcodes {
      */
     public function ajax_newsletter_subscribe() {
         check_ajax_referer( 'katadoo_public_nonce', 'katadoo_nonce' );
+
+        // Vérification ReCaptcha
+        $recaptcha_result = $this->verify_recaptcha();
+        if ( is_wp_error( $recaptcha_result ) ) {
+            wp_send_json_error( array(
+                'message' => $recaptcha_result->get_error_message(),
+            ) );
+        }
 
         $email   = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
         $name    = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
@@ -361,6 +397,14 @@ class Katadoo_Shortcodes {
      */
     public function ajax_helpdesk_submit() {
         check_ajax_referer( 'katadoo_public_nonce', 'katadoo_nonce' );
+
+        // Vérification ReCaptcha
+        $recaptcha_result = $this->verify_recaptcha();
+        if ( is_wp_error( $recaptcha_result ) ) {
+            wp_send_json_error( array(
+                'message' => $recaptcha_result->get_error_message(),
+            ) );
+        }
 
         $email       = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
         $name        = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
@@ -465,5 +509,50 @@ class Katadoo_Shortcodes {
         }
 
         return $this->odoo_client->create( 'res.partner', $partner_data );
+    }
+
+    /**
+     * Vérifie le jeton ReCaptcha.
+     *
+     * @since  1.0.3
+     * @return bool|WP_Error True si valide, WP_Error sinon.
+     */
+    private function verify_recaptcha() {
+        $settings = $this->config->get_recaptcha_settings();
+
+        if ( ! $settings['enabled'] ) {
+            return true;
+        }
+
+        $token = isset( $_POST['recaptcha_token'] ) ? sanitize_text_field( $_POST['recaptcha_token'] ) : '';
+
+        if ( empty( $token ) ) {
+            return new WP_Error( 'recaptcha_missing', __( 'La vérification ReCaptcha a échoué. Veuillez réessayer.', 'katadoo' ) );
+        }
+
+        $response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+            'body' => array(
+                'secret'   => $settings['secret_key'],
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR'],
+            ),
+        ) );
+
+        if ( is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+        if ( ! isset( $body['success'] ) || ! $body['success'] ) {
+            $error_codes = isset( $body['error-codes'] ) ? implode( ', ', $body['error-codes'] ) : 'unknown';
+            return new WP_Error( 'recaptcha_failed', __( 'Échec de la vérification anti-spam (' . $error_codes . '). Veuillez réessayer.', 'katadoo' ) );
+        }
+
+        if ( isset( $body['score'] ) && $body['score'] < $settings['threshold'] ) {
+            return new WP_Error( 'recaptcha_low_score', __( 'Désolé, votre soumission a été identifiée comme potentiellement indésirable.', 'katadoo' ) );
+        }
+
+        return true;
     }
 }

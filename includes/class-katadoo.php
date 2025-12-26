@@ -187,7 +187,8 @@ class Katadoo
     {
         $plugin_public = new Katadoo_Public(
             $this->get_plugin_name(),
-            $this->get_version()
+            $this->get_version(),
+            $this->config
         );
 
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');

@@ -166,6 +166,22 @@ class Katadoo_Config
     }
 
     /**
+     * Retourne les paramètres Google ReCaptcha v3.
+     *
+     * @since  1.0.3
+     * @return array Paramètres ReCaptcha.
+     */
+    public function get_recaptcha_settings()
+    {
+        return $this->get_option('recaptcha_settings', array(
+            'enabled'    => false,
+            'site_key'   => '',
+            'secret_key' => '',
+            'threshold'  => 0.5,
+        ));
+    }
+
+    /**
      * Récupère une option avec mise en cache.
      *
      * @since  1.0.0
@@ -235,6 +251,7 @@ class Katadoo_Config
             'modules',
             'newsletter_settings',
             'helpdesk_settings',
+            'recaptcha_settings',
         );
     }
 

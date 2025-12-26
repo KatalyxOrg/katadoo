@@ -12,79 +12,115 @@
      * Initialisation au chargement du DOM
      */
     $(document).ready(function () {
-        initForms();
+        // Chargement initial (optionnel si on utilise la délégation)
+        // initForms();
     });
 
     /**
-     * Initialise tous les formulaires Katadoo
+     * Gestionnaire de soumission délégué pour tous les formulaires Katadoo
+     * Supporte les formulaires chargés dynamiquement (Popups Elementor)
      */
-    function initForms() {
-        $('.katadoo-form-inner').each(function () {
-            var $form = $(this);
-            initFormSubmission($form);
-        });
-    }
+    $(document).on('submit', '.katadoo-form-inner', function (e) {
+        // Stopper la propagation pour éviter que d'autres scripts (Elementor) n'interfèrent
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        var $form = $(this);
+
+        // Si c'est déjà en cours de traitement, on ne fait rien
+        if ($form.hasClass('processing')) {
+            e.preventDefault();
+            return;
+        }
+
+        e.preventDefault();
+
+        var $button = $form.find('.katadoo-button');
+        var $message = $form.find('.katadoo-message');
+        var formType = $form.data('type');
+
+        // Validation côté client
+        if (!validateForm($form)) {
+            return;
+        }
+
+        // État de chargement
+        $form.addClass('processing');
+        $button.prop('disabled', true).addClass('loading');
+        $message.hide().removeClass('success error');
+
+        // Si ReCaptcha est activé
+        if (katadooPublic.recaptcha && katadooPublic.recaptcha.enabled) {
+            if (window.grecaptcha) {
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(katadooPublic.recaptcha.siteKey, { action: 'submit' }).then(function (token) {
+                        submitForm($form, token);
+                    });
+                });
+            } else {
+                // Si grecaptcha n'est pas encore là, on attend un peu ou on affiche une erreur
+                $form.removeClass('processing');
+                $button.prop('disabled', false).removeClass('loading');
+                $message.addClass('error').html(katadooPublic.strings.error).show();
+            }
+        } else {
+            submitForm($form);
+        }
+    });
 
     /**
-     * Initialise la soumission d'un formulaire
-     *
+     * Soumet le formulaire via AJAX
+     * 
      * @param {jQuery} $form Le formulaire jQuery
+     * @param {string} recaptchaToken Le jeton ReCaptcha (optionnel)
      */
-    function initFormSubmission($form) {
-        $form.on('submit', function (e) {
-            e.preventDefault();
+    function submitForm($form, recaptchaToken) {
+        var $button = $form.find('.katadoo-button');
+        var $message = $form.find('.katadoo-message');
+        var formType = $form.data('type');
 
-            var $button = $form.find('.katadoo-button');
-            var $message = $form.find('.katadoo-message');
-            var formType = $form.data('type');
+        // Préparation des données
+        var data = $form.serializeArray();
 
-            // Validation côté client
-            if (!validateForm($form)) {
-                return;
-            }
+        if (recaptchaToken) {
+            data.push({ name: 'recaptcha_token', value: recaptchaToken });
+        }
 
-            // État de chargement
-            $button.prop('disabled', true).addClass('loading');
-            $message.hide().removeClass('success error');
+        // Envoi AJAX
+        $.ajax({
+            url: katadooPublic.ajaxUrl,
+            type: 'POST',
+            data: $.param(data),
+            success: function (response) {
+                if (response.success) {
+                    $message.addClass('success').html(response.data.message).show();
 
-            // Préparation des données
-            var formData = $form.serialize();
-
-            // Envoi AJAX
-            $.ajax({
-                url: katadooPublic.ajaxUrl,
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    if (response.success) {
-                        $message.addClass('success').html(response.data.message).show();
-
-                        // Réinitialiser le formulaire en cas de succès
-                        if (formType === 'newsletter') {
-                            $form[0].reset();
-                        } else if (formType === 'helpdesk') {
-                            $form[0].reset();
-                        }
-                    } else {
-                        $message.addClass('error').html(response.data.message).show();
+                    // Réinitialiser le formulaire en cas de succès
+                    if (formType === 'newsletter') {
+                        $form[0].reset();
+                    } else if (formType === 'helpdesk') {
+                        $form[0].reset();
                     }
-                },
-                error: function (xhr, status, error) {
-                    var errorMessage = katadooPublic.strings.error;
-
-                    if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
-                        errorMessage = xhr.responseJSON.data.message;
-                    }
-
-                    $message.addClass('error').html(errorMessage).show();
-                },
-                complete: function () {
-                    $button.prop('disabled', false).removeClass('loading');
-
-                    // Scroll vers le message
-                    scrollToElement($message);
+                } else {
+                    $message.addClass('error').html(response.data.message).show();
                 }
-            });
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = katadooPublic.strings.error;
+
+                if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+                    errorMessage = xhr.responseJSON.data.message;
+                }
+
+                $message.addClass('error').html(errorMessage).show();
+            },
+            complete: function () {
+                $form.removeClass('processing');
+                $button.prop('disabled', false).removeClass('loading');
+
+                // Scroll vers le message
+                scrollToElement($message);
+            }
         });
     }
 

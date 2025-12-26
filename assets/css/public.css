@@ -181,6 +181,24 @@ select.katadoo-input {
     color: #991b1b;
 }
 
+/* ReCaptcha Notice */
+.katadoo-recaptcha-notice {
+    margin-top: 15px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--katadoo-gray-500);
+    text-align: center;
+}
+
+.katadoo-recaptcha-notice a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.katadoo-recaptcha-notice a:hover {
+    color: var(--katadoo-primary);
+}
+
 /* Field Error */
 .katadoo-field-error {
     display: block;
